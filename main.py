@@ -4,22 +4,9 @@ import sys
 from pathlib import Path
 from typing import Iterable, Any
 from tree_sitter import Language, Parser
-
-
-Language.build_library(
-    'build/my-languages.so',
-    [
-        'tree-sitter-typescript/typescript',
-        'tree-sitter-typescript/tsx',
-        'tree-sitter-javascript',
-        'tree-sitter-python',
-    ]
-)
-
-TS_LANGUAGE = Language('build/my-languages.so', 'typescript')
-JS_LANGUAGE = Language('build/my-languages.so', 'javascript')
-PY_LANGUAGE = Language('build/my-languages.so', 'python')
-parser = Parser()
+import tree_sitter_javascript as javascript
+JAVASCRIPT = Language(javascript.language())
+parser = Parser(JAVASCRIPT)
 
 
 @dataclass
@@ -111,7 +98,7 @@ class FileScanner():
                 top_level_nodes.append(Class.register(node=child, link=link,code=code))
 
             elif child.type == "lexical_declaration":
-                result = cls.checkLexicalDeclaration(node=child,code=code)
+                result = cls.checkLexicalDeclaration(node=child,link=link,code=code)
                 if isinstance(result, Class):
                     top_level_nodes.append(result)
 
@@ -120,7 +107,7 @@ class FileScanner():
                     if sub.type in ("function_declaration", "class_declaration"):
                         top_level_nodes.append(Class.register(node=sub, link=link,code=code))
                     elif sub.type == "lexical_declaration":
-                        result = cls.checkLexicalDeclaration(node=sub,code=code)
+                        result = cls.checkLexicalDeclaration(node=sub,link=link,code=code)
                         if isinstance(result, Class):
                             top_level_nodes.append(result)
                     elif sub.type == "identifier":
@@ -137,12 +124,12 @@ class FileScanner():
     def searchDependancies(cls)->Iterable[Dependance]: #"export_statement"
         pass
     @classmethod
-    def fileScanner(cls, link:Path, project:Project, parser:Any)->Project:
+    def fileScanner(cls, link:Path, project:Project)->Project:
         contenu = link.read_text(encoding="utf-8")
-        tree = parser.parse(contenu)
+        tree = parser.parse(contenu.encode(encoding="utf8"))
         root = tree.root_node
         classs = cls.searchClass(root=root,link=link, code=contenu)
-        print(link+': \n')
+        print(str(link)+': \n')
         for classe in classs:
             print(f'{classe.class_type} : {classe.name}')
 
@@ -152,11 +139,9 @@ class NavigateTroughtProject():
         if 'test' in fileName:
             return
         if fileName.endswith((".ts", ".tsx", ".js")):
-            parser.set_language(TS_LANGUAGE) 
-            project = FileScanner.fileScanner(link=link,project=project,parser=parser)
+            project = FileScanner.fileScanner(link=link,project=project)
         elif fileName.endswith((".js")):
-            parser.set_language(JS_LANGUAGE) 
-            project = FileScanner.fileScanner(link=link,project=project,parser=parser)
+            project = FileScanner.fileScanner(link=link,project=project)
         else:
             return
         return project
@@ -167,7 +152,7 @@ class NavigateTroughtProject():
             for file in files:
                 if 'node_modules' in root or root == str(link):
                     continue
-                chemin_complet = os.path.join(root, file)
+                chemin_complet = Path(os.path.join(root, file))
                 project = self.registerFile(link=chemin_complet, fileName=file, project=project)
         return
             
