@@ -60,7 +60,11 @@ class Class():
             node=node,
         )
 
-    def addMethod(self, method:Method)->'Class':
+    def addMethod(self, name:Node, params:Node, retour:Node)->'Class':
+        nameString = self.code[name.start_byte:name.end_byte].decode("utf-8")
+        paramsString = self.code[params.start_byte:params.end_byte].decode("utf-8")
+        retourString = self.code[retour.start_byte:retour.end_byte].decode("utf-8")
+        method = Method(name=nameString, params=paramsString, retour=retourString)
         return replace(self,method=self.method + [method])
     
     def addInstance(self,name:Node, type:Node)->'Class':
@@ -145,8 +149,8 @@ class FileScanner():
                 name = child.child_by_field_name("name")
                 args = child.child_by_field_name("parameters")
                 return_type = child.child_by_field_name("return_type")
-                
-        pass
+                classe = classe.addMethod(name=name,params=args,retour=return_type)
+        return classe
     @classmethod
     def searchInstance(cls, classe:Class)->Class:#"lexical_declaration"
         classe = classe
@@ -167,7 +171,6 @@ class FileScanner():
                         if name and type : 
                             if type.type not in ("arrow_function", "function"): 
                                 classe = classe.addInstance(name=name,type=type)
-            #if child.type == "abstract_method_signature":
         return classe
         
     @classmethod
@@ -181,10 +184,11 @@ class FileScanner():
         root = tree.root_node
         classs = cls.searchClass(root=root,link=link, code=code_bytes)
         for classe in classs:
-            Newclasse = cls.searchInstance(classe)
-            if Newclasse:
+            classeWithInstance = cls.searchInstance(classe)
+            classeWithMethod = cls.searchMethod(classeWithInstance)
+            if classeWithMethod:
                 print(link,'\n')
-                print(f"🗞️ classe : {Newclasse.name} : {Newclasse.instance}")
+                print(f"🗞️ classe : {classeWithMethod.name} : {classeWithMethod.method}")
             else:
                 print(f"🚨 erreur sur la classe {classe.name} / {classe.path}")
 
@@ -250,3 +254,6 @@ def main() -> None:
     
 if __name__ == "__main__":
     main()
+
+
+# poetry run python main.py get_uml /Users/thierrydambreville/Projets_Epitech/T-DEV-600/Epillo
