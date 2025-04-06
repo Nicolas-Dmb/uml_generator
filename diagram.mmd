@@ -1,0 +1,930 @@
+classDiagram
+%% Diagramme UML du projet "Epillo"
+class Tab {
+  «variable_declarator»
+}
+class Stack {
+  «variable_declarator»
+}
+class WorkspaceStack {
+  «function_declaration»
+}
+class SearchStack {
+  «function_declaration»
+}
+class CardStack {
+  «function_declaration»
+}
+class AddStack {
+  «function_declaration»
+}
+class AddScreen {
+  «function_declaration»
+}
+class MyTabs {
+  «function_declaration»
+}
+class App {
+  «function_declaration»
+}
+class Di {
+  «arrow_function»
+}
+class di {
+  «variable_declarator»
+}
+class ListCard {
+  «function_declaration»
+  +getCard(): ['setError', 'setLoading', 'setCard']
+  +updateCard(): ['setError', 'setCard']
+  +deleteCard(): ['setError', 'setCard']
+}
+class NewCard {
+  «function_declaration»
+  +newCard(): ['di.newCardController.Submit', 'setError', 'reloadList']
+}
+class di {
+  «variable_declarator»
+}
+class DetailCardScreen {
+  «function_declaration»
+  +handleChange(): ['clearTimeout', 'setTimeout', 'setError']
+  +handleDelete(): ['setError', 'navigation.goBack']
+  +setNewCard(): ['setCard']
+}
+class HeaderPage {
+  «function_declaration»
+  +initActualListAndBoard(list, board): ['listsofBoard?.map', 'setListofCard', 'userBoards?.map', 'setBoardofCard']
+  +handleChangeDueComplete(value:boolean): ['setNewCard']
+  +handleChangeBoard(board:Board): ['initActualListAndBoard', 'di.updateCardController.changeBoardAndList', 'setNewCard']
+  +handleChangeList(liste:Liste): ['di.updateCardController.changeBoardAndList', 'setNewCard']
+  +getListsofBoard(boardId:string): ['setListsofBoard', 'initActualListAndBoard']
+}
+class _SelectCard {
+  «function_declaration»
+  +handleDateChange(event: any): ['setDisplay', 'setShowPicker', 'setNewCard']
+}
+class Members {
+  «arrow_function»
+}
+class _ListValuesMember {
+  «arrow_function»
+  +updateMemberInCard(member:Member): ['setError', 'card?.membersID?.includes', 'card.deleteMember', 'card!.membersID!.push', 'di.updateCardController.updateCard', 'navigation.goBack', 'setNewCard']
+}
+class CheckListView {
+  «arrow_function»
+  +createCheckList(inputNameList:string): ['setError', 'card!.checkLists?.push', 'setNewCard', 'setInputNameList', 'setIsSelectAddList']
+  +setchecked(checkItem:CheckItem, checkList:CheckList): ['setError', 'setNewCard']
+  +deletecheckItem(checkItem:CheckItem): ['di.checkListController.deleteCheckItem', 'setNewCard']
+  +deleteCheckList(checkList:CheckList): ['di.checkListController.deleteCheckList', 'setNewCard']
+  +createCheckItem(inputName:string, checkList: CheckList): ['setError', 'checkList.checkItems.push', 'setNewCard', 'setInputName', 'setIsSelectAddItem']
+}
+class renderRightActions {
+  «arrow_function»
+  +onDelete
+}
+class di {
+  «variable_declarator»
+}
+class MyCards {
+  «function_declaration»
+}
+class SearchBar {
+  «arrow_function»
+  +handleChange(newText:string): ['setCards']
+}
+class ListCards {
+  «function_declaration»
+}
+class di {
+  «variable_declarator»
+}
+class NewCardScreen {
+  «function_declaration»
+  +handleClose(): ['navigation.goBack']
+  +setDefaultLists(): ['setBoards', 'di.boardController.getUserBoards', 'setErrorMessage']
+  +handleSubmit(): ['formRef.current.handleSubmit']
+}
+class _Form {
+  «variable_declarator»
+}
+class _BoardQuestion {
+  «arrow_function»
+}
+class _ListQuestion {
+  «arrow_function»
+}
+class _SelectMembers {
+  «arrow_function»
+}
+class _SelectDate {
+  «arrow_function»
+  +handleDateChange(event: any): ['selectDate']
+}
+class _BoardValues {
+  «arrow_function»
+}
+class _ListValues {
+  «arrow_function»
+}
+class _ListValuesMember {
+  «arrow_function»
+}
+class _ErrorMessage {
+  «arrow_function»
+}
+class MyCardsController {
+  «class_declaration»
+  +getCards(()): [':Promise<Card[]|CustomError>']
+}
+class DeleteCardController {
+  «class_declaration»
+  +deleteCard((idCard:string)): [':Promise<void|CustomError>']
+}
+class UpdateCardController {
+  «class_declaration»
+  +updateCard((card:Card)): [':Promise<Card|CustomError>']
+  +changeBoardAndList((card:Card)): [':Promise<Card>']
+}
+class GetCardController {
+  «class_declaration»
+  +getCard((idCard:string)): [':Promise<Card|CustomError>']
+  +getMemberWorkspace((idBoard:string)): [':Promise<Member[]|CustomError>']
+}
+class NewCardController {
+  «class_declaration»
+  +Submit(board:string, list:string, name:string, description:string|undefined, startDate:Date|null|undefined, endDate:Date|null|undefined, members:string[]|null): ['this.useCase.execute']
+}
+class BoardController {
+  «class_declaration»
+  +getUserBoards(()): [':Promise<Board[]>']
+  +getBoardLists((idBoard:string)): [':Promise<Liste[]>']
+  +addWorkspaceMembertOnBoard((boardID:string, newMemberId:string)): [':Promise<void>']
+  +getBoardMembers((board:Board)): [':Promise<Board>']
+}
+class CheckListController {
+  «class_declaration»
+  +createCheckList((checkList:CheckList)): [':Promise<CheckList|CustomError>']
+  +updateCheckList((checkList:CheckList)): [':Promise<void|CustomError>']
+  +deleteCheckList((checkList:CheckList, card:Card)): [':Promise<void|CustomError>']
+  +createCheckItem((checkItem:CheckItem)): [':Promise<CheckItem|CustomError>']
+  +updateCheckItem((checkItem:CheckItem)): [':Promise<CheckItem|CustomError>']
+  +deleteCheckItem((checkItem:CheckItem, card:Card)): [':Promise<void|CustomError>']
+}
+class CheckListRepository {
+  «class_declaration»
+  +createCheckList((checkList:CheckList)): [':Promise<CheckList|CustomError>']
+  +updateCheckList((checkList:CheckList)): [':Promise<CheckList|CustomError>']
+  +deleteCheckList((checkList:CheckList)): [':Promise<void>']
+  +createCheckItem((checkItem:CheckItem)): [':Promise<CheckItem|CustomError>']
+  +updateCheckItem((checkItem:CheckItem)): [':Promise<CheckItem|CustomError>']
+  +deleteCheckItem((checkItem:CheckItem)): [':Promise<void>']
+  +manageError((error:any,message:string)): [':CustomError']
+}
+class CardRemoteDataSource {
+  «class_declaration»
+  +createCard((card:Card)): [':Promise<void>']
+  +getMyCards(()): [':Promise<Card[]>']
+  +getCard((idCard:string)): [':Promise<any>']
+  +updateCard((card:Card)): [':Promise<Card>']
+  +changeBoardAndList((card:Card)): [':Promise<Card>']
+  +deleteCard((idCard:string)): [':Promise<void>']
+}
+class CheckListRemoteDataSource {
+  «class_declaration»
+  +getCheckLists((idCheckList:string)): [':Promise<CheckList>']
+  +createCheckList((checkList:CheckList)): [':Promise<CheckList>']
+  +updateCheckList((checkList:CheckList)): [':Promise<CheckList>']
+  +deleteCheckList((checkList:CheckList)): [':Promise<void>']
+  +createCheckItem((checkItem:CheckItem)): [':Promise<CheckItem>']
+  +updateChecItem((checkItem:CheckItem)): [':Promise<CheckItem>']
+  +deleteCheckItem((checkItem:CheckItem)): [':Promise<void>']
+}
+class CardRepository {
+  «class_declaration»
+  +new((card: Card)): [': Promise<void | CustomError>']
+  +getMyCards(()): [': Promise<Card[]>']
+  +getCard((idCard:string)): [':Promise<Card>']
+  +_pushCheckListInCard((data:any)): [':Promise<Card>']
+  +udpdateCard((card:Card)): [':Promise<Card>']
+  +changeBoardAndList((card:Card)): [':Promise<Card>']
+  +deleteCard((idCard:string)): [':Promise<void>']
+}
+class IBoardRepository {
+  «abstract_class_declaration»
+  +getUserBoards(()): [':Promise<Board[]>']
+  +getBoardLists((idBoard:string)): [':Promise<Liste[]>']
+  +addWorkspaceMembertOnBoard((boardID:string, newMemberId:string)): [':Promise<void>']
+  +getBoardMembers((board:Board)): [':Promise<Board>']
+}
+class ICheckListRepository {
+  «abstract_class_declaration»
+  +createCheckList((checkList:CheckList)): [':Promise<CheckList|CustomError>']
+  +updateCheckList((checkList:CheckList)): [':Promise<CheckList|CustomError>']
+  +deleteCheckList((checkList:CheckList)): [':Promise<void>']
+  +createCheckItem((checkItem:CheckItem)): [':Promise<CheckItem|CustomError>']
+  +updateCheckItem((checkItem:CheckItem)): [':Promise<CheckItem|CustomError>']
+  +deleteCheckItem((checkItem:CheckItem)): [':Promise<void>']
+}
+class Card {
+  «class_declaration»
+  +createToJson(()): [': string']
+  +updateToJson(()): [': string']
+  +fromJson((data: any)): [':Card']
+  +includes((input:String)): [':boolean']
+  +deleteMember((userId: string)): [': void']
+  +deleteCheckItem((checkListId: string, checkItemId: string)): [': void']
+  +deleteCheckList((checkListId: string)): [': void']
+}
+class CheckList {
+  «class_declaration»
+  +createToJson(()): [':string']
+  +updateToJson(()): [':string']
+  +fromJson((data:any)): [':CheckList']
+}
+class CheckItem {
+  «class_declaration»
+  +createToJson(()): [':string']
+  +updateToJson(()): [': string']
+  +fromJson((data: any,idCheckList:string, idCard:string  )): [':CheckItem']
+}
+class GetCardUseCase {
+  «class_declaration»
+  +getCard((idCard:string)): [':Promise<Card|CustomError>']
+}
+class CheckListUseCase {
+  «class_declaration»
+  +createCheckList((checkList:CheckList)): [':Promise<CheckList|CustomError>']
+  +updateCheckList((checkList:CheckList)): [':Promise<CheckList|CustomError>']
+  +deleteCheckList((checkList:CheckList)): [':Promise<void|CustomError>']
+  +createCheckItem((checkItem:CheckItem)): [':Promise<CheckItem|CustomError>']
+  +updateCheckItem((checkItem:CheckItem)): [':Promise<CheckItem|CustomError>']
+  +deleteCheckItem((checkItem:CheckItem)): [':Promise<void|CustomError>']
+  +manageError((error:any,message:string)): [':CustomError']
+}
+class UpdateCardUseCase {
+  «class_declaration»
+  +updateCard((card:Card)): [':Promise<Card|CustomError>']
+  +changeBoardAndList((card:Card)): [':Promise<Card>']
+}
+class DeleteCardUseCase {
+  «class_declaration»
+  +deleteCard((idCard:string)): [':Promise<void|CustomError>']
+}
+class MyCardsUseCase {
+  «class_declaration»
+  +_sortResult((array:Card[])): [':Card[]']
+  +getMyCards(()): [':Promise<Card[]>']
+}
+class BoardUseCase {
+  «class_declaration»
+  +getUserBoards(()): [':Promise<Board[]>']
+  +getBoardLists((idBoard:string)): [':Promise<Liste[]>']
+  +addWorkspaceMembertOnBoard((boardID:string, newMemberId:string)): [':Promise<void>']
+  +getBoardMembers((board:Board)): [':Promise<Board>']
+}
+class NewCardUseCase {
+  «class_declaration»
+  +execute((card: Card)): [': Promise<void>']
+}
+class GeneralRemoteDataSource {
+  «class_declaration»
+  +getUID(()): [': Promise<string>']
+}
+class MemberRemoteDataSource {
+  «class_declaration»
+  +GetMemberById((idMember:string)): [':Promise<Member>']
+}
+class Member {
+  «class_declaration»
+  +fromJson((data:any)): [':Member']
+}
+class Colors {
+  «variable_declarator»
+}
+class CustomError {
+  «class_declaration»
+}
+class LoaderScreen {
+  «function_declaration»
+}
+class LoaderApp {
+  «function_declaration»
+}
+class loadFonts {
+  «function_declaration»
+}
+class Header {
+  «function_declaration»
+}
+class CreateBoard {
+  «arrow_function»
+  +name
+  +desc
+}
+class OrganizationDetails {
+  «class_declaration»
+}
+class GetOrganizationName {
+  «arrow_function»
+  +organizationId
+}
+class CreateCardList {
+  «class_declaration»
+}
+class NewCardList {
+  «arrow_function»
+  +boardId
+  +listName
+}
+class DeleteCardList {
+  «class_declaration»
+}
+class removeCardList {
+  «arrow_function»
+  +id
+}
+class BoardRemoteDataSource {
+  «class_declaration»
+  +getBoardWorkSpace((idBoard:String)): [':Promise<string>']
+  +getUserBoards(()): [':Promise<Board[]>']
+  +getBoardLists((idBoard:string)): [':Promise<Liste[]>']
+  +addWorkspaceMembertOnBoard((boardID:string, newMemberId:string)): [':Promise<void>']
+  +getBoardMembers((board:Board)): [':Promise<Board>']
+}
+class BoardDetails {
+  «class_declaration»
+}
+class GetBoard {
+  «arrow_function»
+  +id
+}
+class BoardRepository {
+  «class_declaration»
+  +getUserBoards(()): [':Promise<Board[]>']
+  +getBoardLists((idBoard:string)): [':Promise<Liste[]>']
+  +addWorkspaceMembertOnBoard((boardID:string, newMemberId:string)): [':Promise<void>']
+  +getBoardMembers((board:Board)): [':Promise<Board>']
+}
+class DeleteBoard {
+  «arrow_function»
+  +id
+}
+class DeleteMember {
+  «arrow_function»
+  +boardId
+  +idMember
+}
+class OneBoardMember {
+  «class_declaration»
+}
+class GetOneBoardMember {
+  «arrow_function»
+  +id
+}
+class AddMember {
+  «arrow_function»
+  +boardId
+  +email
+}
+class BoardDetails {
+  «class_declaration»
+}
+class UpdateBoard {
+  «arrow_function»
+  +id
+  +data
+}
+class BoardCardList {
+  «class_declaration»
+}
+class GetCardList {
+  «arrow_function»
+  +id
+}
+class BoardMember {
+  «class_declaration»
+}
+class GetBoardMember {
+  «arrow_function»
+  +id
+}
+class BoardDescModal {
+  «arrow_function»
+  +handleSave(): ['desc.trim', 'setError', 'onUpdate', 'onClose', 'console.error']
+}
+class BoardDeleteSubModal {
+  «arrow_function»
+  +handleDeleteMember(): ['console.error', 'onDeleteMember', 'onClose']
+}
+class BoardAddSubModal {
+  «arrow_function»
+  +handleAddMember(): ['onAddMember', 'onClose', 'console.error']
+}
+class WorkspaceModal {
+  «arrow_function»
+  +loadWorkspaces(): ['setLoading', 'setError', 'setWorkspaces']
+}
+class BoardNameModal {
+  «arrow_function»
+  +handleSave(): ['name.trim', 'setError', 'onUpdate', 'onClose', 'console.error']
+}
+class NewCardModal {
+  «arrow_function»
+}
+class NewMemberScreen {
+  «function_declaration»
+  +handleAddMember(): ['setError', 'Alert.alert', 'navigation.goBack', 'console.error']
+}
+class BoardCardList {
+  «function_declaration»
+  +scrollToBottom(listId: string): ['scrollView.scrollToEnd']
+}
+class BoardDetailScreen {
+  «function_declaration»
+  +addSpacesBetweenWords((text: string)): [': string']
+}
+class NewBoardScreen {
+  «arrow_function»
+  +handleCreateBoard(): ['boardName.trim', 'setError', 'navigation.navigate', 'console.error', 'Alert.alert']
+}
+class useBoardDetails {
+  «arrow_function»
+  +boardId
+}
+class useBoardMembers {
+  «arrow_function»
+  +boardId
+}
+class useOneBoardMembers {
+  «arrow_function»
+  +boardId
+}
+class useOrganizationName {
+  «arrow_function»
+  +organizationId
+}
+class useCardList {
+  «arrow_function»
+  +boardId
+}
+class handleDeleteBoard {
+  «arrow_function»
+  +boardId
+  +navigation
+  +setError
+}
+class Board {
+  «class_declaration»
+  +fromJson(data:any)
+}
+class handleCreateCardList {
+  «arrow_function»
+  +boardId
+  +listName
+  +setIsCreatingList
+  +setNewListName
+  +setLocalCardLists
+}
+class handleDeleteMember {
+  «arrow_function»
+  +boardId
+  +idMember
+  +setDeleteSubModalVisible
+  +setEmail
+}
+class handleAddCard {
+  «arrow_function»
+  +listId
+  +cardName
+  +repository
+}
+class handleCreateCardList {
+  «arrow_function»
+  +boardId
+  +listName
+  +setIsCreatingList
+  +setNewListName
+  +setLocalCardLists
+}
+class handleAddMember {
+  «arrow_function»
+  +boardId
+  +email
+  +setAddSubModalVisible
+  +setEmail
+}
+class handleSelectWorkspace {
+  «arrow_function»
+  +workspaceId
+  +setWorkspaceModalVisible
+  +setBoards
+  +setSelectedWorkspaceName
+  +boardId
+}
+class BoardList {
+  «function_declaration»
+}
+class WorkspaceList {
+  «function_declaration»
+}
+class Workspace {
+  «function_declaration»
+}
+class BoardsScreen {
+  «function_declaration»
+}
+class WorkSpaceRemoteDataSource {
+  «class_declaration»
+  +GetWorkSpaceMember((idWorkSpace:string)): [':Promise<Member[]>']
+}
+class fetchWorkspaces {
+  «arrow_function»
+}
+class fetchBoards {
+  «arrow_function»
+  +workspaceId
+}
+class Di {
+  «arrow_function»
+}
+class SearchRemoteDataSource {
+  «class_declaration»
+  +search((input:string)): [':Promise<any[]>']
+}
+class SearchRemoteDataSourceContract {
+  «abstract_class_declaration»
+  +search((input:string)): [':Promise<any[]>']
+}
+class SearchUseCase {
+  «class_declaration»
+  +search((input:string)): [':Promise<any[]>']
+}
+class di {
+  «variable_declarator»
+}
+class Search {
+  «function_declaration»
+  +getResult(): ['setResults', 'setError']
+}
+class _card {
+  «function_declaration»
+}
+class _board {
+  «function_declaration»
+}
+class Di {
+  «arrow_function»
+}
+class ListRemoteDataSource {
+  «class_declaration»
+  +getList((idList:string)): [':Promise<Liste>']
+  +getCardsList((liste:Liste)): [':Promise<Liste>']
+  +updateList((liste:Liste)): [':Promise<Liste>']
+  +createList((liste:Liste)): [':Promise<Liste>']
+  +deleteList((liste:Liste)): [':Promise<void>']
+  +archiveCardsList((liste:Liste)): [':Promise<void>']
+}
+class Liste {
+  «class_declaration»
+  +fromJson((data:any)): [':Liste']
+  +toJson(()): [':any']
+}
+class ListUseCase {
+  «class_declaration»
+  +getList((idList:string)): [':Promise<Liste>']
+  +getCardsList((liste:Liste)): [':Promise<Liste>']
+  +updateList((liste:Liste)): [':Promise<Liste>']
+  +createList((liste:Liste)): [':Promise<Liste>']
+  +deleteList((liste:Liste)): [':Promise<void>']
+  +archiveCardsList((liste:Liste)): [':Promise<Liste>']
+  +manageError((error:any,message:string)): [':CustomError']
+}
+class ListRemoteDataSourceContract {
+  «abstract_class_declaration»
+  +getList((idList:string)): [':Promise<Liste>']
+  +getCardsList((liste:Liste)): [':Promise<Liste>']
+  +updateList((liste:Liste)): [':Promise<Liste>']
+  +createList((liste:Liste)): [':Promise<Liste>']
+  +deleteList((liste:Liste)): [':Promise<void>']
+  +archiveCardsList((liste:Liste)): [':Promise<void>']
+}
+class di {
+  «variable_declarator»
+}
+class ButtonListScreen {
+  «function_declaration»
+}
+class NewListScreen {
+  «function_declaration»
+  +createListe(): ['addList', 'setError', 'onPress']
+}
+class di {
+  «variable_declarator»
+}
+class ListScreen {
+  «function_declaration»
+  +getList(): ['setList', 'setIsLoading', 'setError']
+  +setNewList(name:string): ['setList', 'updateList']
+  +updateList(liste:Liste): ['setList', 'setError']
+}
+Tab --> Stack
+Tab --> WorkspaceStack
+Tab --> SearchStack
+Tab --> CardStack
+Tab --> AddStack
+Tab --> AddScreen
+Tab --> MyTabs
+Tab --> App
+Stack --> Tab
+Stack --> WorkspaceStack
+Stack --> SearchStack
+Stack --> CardStack
+Stack --> AddStack
+Stack --> AddScreen
+Stack --> MyTabs
+Stack --> App
+WorkspaceStack --> Tab
+WorkspaceStack --> Stack
+WorkspaceStack --> SearchStack
+WorkspaceStack --> CardStack
+WorkspaceStack --> AddStack
+WorkspaceStack --> AddScreen
+WorkspaceStack --> MyTabs
+WorkspaceStack --> App
+SearchStack --> Tab
+SearchStack --> Stack
+SearchStack --> WorkspaceStack
+SearchStack --> CardStack
+SearchStack --> AddStack
+SearchStack --> AddScreen
+SearchStack --> MyTabs
+SearchStack --> App
+CardStack --> Tab
+CardStack --> Stack
+CardStack --> WorkspaceStack
+CardStack --> SearchStack
+CardStack --> AddStack
+CardStack --> AddScreen
+CardStack --> MyTabs
+CardStack --> App
+AddStack --> Tab
+AddStack --> Stack
+AddStack --> WorkspaceStack
+AddStack --> SearchStack
+AddStack --> CardStack
+AddStack --> AddScreen
+AddStack --> MyTabs
+AddStack --> App
+AddScreen --> Tab
+AddScreen --> Stack
+AddScreen --> WorkspaceStack
+AddScreen --> SearchStack
+AddScreen --> CardStack
+AddScreen --> AddStack
+AddScreen --> MyTabs
+AddScreen --> App
+MyTabs --> Tab
+MyTabs --> Stack
+MyTabs --> WorkspaceStack
+MyTabs --> SearchStack
+MyTabs --> CardStack
+MyTabs --> AddStack
+MyTabs --> AddScreen
+MyTabs --> App
+App --> Tab
+App --> Stack
+App --> WorkspaceStack
+App --> SearchStack
+App --> CardStack
+App --> AddStack
+App --> AddScreen
+App --> MyTabs
+di --> ListCard
+di --> NewCard
+ListCard --> di
+ListCard --> NewCard
+NewCard --> di
+NewCard --> ListCard
+di --> DetailCardScreen
+di --> HeaderPage
+di --> _SelectCard
+di --> Members
+di --> _ListValuesMember
+di --> CheckListView
+di --> renderRightActions
+DetailCardScreen --> di
+DetailCardScreen --> HeaderPage
+DetailCardScreen --> _SelectCard
+DetailCardScreen --> Members
+DetailCardScreen --> _ListValuesMember
+DetailCardScreen --> CheckListView
+DetailCardScreen --> renderRightActions
+HeaderPage --> di
+HeaderPage --> DetailCardScreen
+HeaderPage --> _SelectCard
+HeaderPage --> Members
+HeaderPage --> _ListValuesMember
+HeaderPage --> CheckListView
+HeaderPage --> renderRightActions
+_SelectCard --> di
+_SelectCard --> DetailCardScreen
+_SelectCard --> HeaderPage
+_SelectCard --> Members
+_SelectCard --> _ListValuesMember
+_SelectCard --> CheckListView
+_SelectCard --> renderRightActions
+Members --> di
+Members --> DetailCardScreen
+Members --> HeaderPage
+Members --> _SelectCard
+Members --> _ListValuesMember
+Members --> CheckListView
+Members --> renderRightActions
+_ListValuesMember --> di
+_ListValuesMember --> DetailCardScreen
+_ListValuesMember --> HeaderPage
+_ListValuesMember --> _SelectCard
+_ListValuesMember --> Members
+_ListValuesMember --> CheckListView
+_ListValuesMember --> renderRightActions
+CheckListView --> di
+CheckListView --> DetailCardScreen
+CheckListView --> HeaderPage
+CheckListView --> _SelectCard
+CheckListView --> Members
+CheckListView --> _ListValuesMember
+CheckListView --> renderRightActions
+renderRightActions --> di
+renderRightActions --> DetailCardScreen
+renderRightActions --> HeaderPage
+renderRightActions --> _SelectCard
+renderRightActions --> Members
+renderRightActions --> _ListValuesMember
+renderRightActions --> CheckListView
+di --> MyCards
+di --> SearchBar
+di --> ListCards
+MyCards --> di
+MyCards --> SearchBar
+MyCards --> ListCards
+SearchBar --> di
+SearchBar --> MyCards
+SearchBar --> ListCards
+ListCards --> di
+ListCards --> MyCards
+ListCards --> SearchBar
+di --> NewCardScreen
+di --> _Form
+di --> _BoardQuestion
+di --> _ListQuestion
+di --> _SelectMembers
+di --> _SelectDate
+di --> _BoardValues
+di --> _ListValues
+di --> _ListValuesMember
+di --> _ErrorMessage
+NewCardScreen --> di
+NewCardScreen --> _Form
+NewCardScreen --> _BoardQuestion
+NewCardScreen --> _ListQuestion
+NewCardScreen --> _SelectMembers
+NewCardScreen --> _SelectDate
+NewCardScreen --> _BoardValues
+NewCardScreen --> _ListValues
+NewCardScreen --> _ListValuesMember
+NewCardScreen --> _ErrorMessage
+_Form --> di
+_Form --> NewCardScreen
+_Form --> _BoardQuestion
+_Form --> _ListQuestion
+_Form --> _SelectMembers
+_Form --> _SelectDate
+_Form --> _BoardValues
+_Form --> _ListValues
+_Form --> _ListValuesMember
+_Form --> _ErrorMessage
+_BoardQuestion --> di
+_BoardQuestion --> NewCardScreen
+_BoardQuestion --> _Form
+_BoardQuestion --> _ListQuestion
+_BoardQuestion --> _SelectMembers
+_BoardQuestion --> _SelectDate
+_BoardQuestion --> _BoardValues
+_BoardQuestion --> _ListValues
+_BoardQuestion --> _ListValuesMember
+_BoardQuestion --> _ErrorMessage
+_ListQuestion --> di
+_ListQuestion --> NewCardScreen
+_ListQuestion --> _Form
+_ListQuestion --> _BoardQuestion
+_ListQuestion --> _SelectMembers
+_ListQuestion --> _SelectDate
+_ListQuestion --> _BoardValues
+_ListQuestion --> _ListValues
+_ListQuestion --> _ListValuesMember
+_ListQuestion --> _ErrorMessage
+_SelectMembers --> di
+_SelectMembers --> NewCardScreen
+_SelectMembers --> _Form
+_SelectMembers --> _BoardQuestion
+_SelectMembers --> _ListQuestion
+_SelectMembers --> _SelectDate
+_SelectMembers --> _BoardValues
+_SelectMembers --> _ListValues
+_SelectMembers --> _ListValuesMember
+_SelectMembers --> _ErrorMessage
+_SelectDate --> di
+_SelectDate --> NewCardScreen
+_SelectDate --> _Form
+_SelectDate --> _BoardQuestion
+_SelectDate --> _ListQuestion
+_SelectDate --> _SelectMembers
+_SelectDate --> _BoardValues
+_SelectDate --> _ListValues
+_SelectDate --> _ListValuesMember
+_SelectDate --> _ErrorMessage
+_BoardValues --> di
+_BoardValues --> NewCardScreen
+_BoardValues --> _Form
+_BoardValues --> _BoardQuestion
+_BoardValues --> _ListQuestion
+_BoardValues --> _SelectMembers
+_BoardValues --> _SelectDate
+_BoardValues --> _ListValues
+_BoardValues --> _ListValuesMember
+_BoardValues --> _ErrorMessage
+_ListValues --> di
+_ListValues --> NewCardScreen
+_ListValues --> _Form
+_ListValues --> _BoardQuestion
+_ListValues --> _ListQuestion
+_ListValues --> _SelectMembers
+_ListValues --> _SelectDate
+_ListValues --> _BoardValues
+_ListValues --> _ListValuesMember
+_ListValues --> _ErrorMessage
+_ListValuesMember --> di
+_ListValuesMember --> NewCardScreen
+_ListValuesMember --> _Form
+_ListValuesMember --> _BoardQuestion
+_ListValuesMember --> _ListQuestion
+_ListValuesMember --> _SelectMembers
+_ListValuesMember --> _SelectDate
+_ListValuesMember --> _BoardValues
+_ListValuesMember --> _ListValues
+_ListValuesMember --> _ErrorMessage
+_ErrorMessage --> di
+_ErrorMessage --> NewCardScreen
+_ErrorMessage --> _Form
+_ErrorMessage --> _BoardQuestion
+_ErrorMessage --> _ListQuestion
+_ErrorMessage --> _SelectMembers
+_ErrorMessage --> _SelectDate
+_ErrorMessage --> _BoardValues
+_ErrorMessage --> _ListValues
+_ErrorMessage --> _ListValuesMember
+Card --> CheckList
+Card --> CheckItem
+CheckList --> Card
+CheckList --> CheckItem
+CheckItem --> Card
+CheckItem --> CheckList
+OrganizationDetails --> GetOrganizationName
+GetOrganizationName --> OrganizationDetails
+CreateCardList --> NewCardList
+NewCardList --> CreateCardList
+DeleteCardList --> removeCardList
+removeCardList --> DeleteCardList
+BoardDetails --> GetBoard
+GetBoard --> BoardDetails
+OneBoardMember --> GetOneBoardMember
+GetOneBoardMember --> OneBoardMember
+BoardDetails --> UpdateBoard
+UpdateBoard --> BoardDetails
+BoardCardList --> GetCardList
+GetCardList --> BoardCardList
+BoardMember --> GetBoardMember
+GetBoardMember --> BoardMember
+fetchWorkspaces --> fetchBoards
+fetchBoards --> fetchWorkspaces
+di --> Search
+di --> _card
+di --> _board
+Search --> di
+Search --> _card
+Search --> _board
+_card --> di
+_card --> Search
+_card --> _board
+_board --> di
+_board --> Search
+_board --> _card
+di --> ButtonListScreen
+di --> NewListScreen
+ButtonListScreen --> di
+ButtonListScreen --> NewListScreen
+NewListScreen --> di
+NewListScreen --> ButtonListScreen
+di --> ListScreen
+ListScreen --> di
